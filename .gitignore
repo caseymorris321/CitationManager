@@ -1,0 +1,8 @@
+merge-repo.js
+package-lock.json
+package.json
+backend/.env
+.env
+backend/node_modules
+frontend/node_modules
+node_modules

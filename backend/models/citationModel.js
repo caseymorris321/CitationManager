@@ -10,17 +10,17 @@ const cseSpecificSchema = new Schema({
 }, { _id: false });
 
 const apaSpecificSchema = new Schema({
-
+  // Add APA-specific fields here
 });
 
 const mlaSpecificSchema = new Schema({
-
-})
+  // Add MLA-specific fields here
+});
 
 const styleSpecificSchemas = {
   'CSE': cseSpecificSchema,
-  // 'APA': apaSpecificSchema,
-  // 'MLA': mlaSpecificSchema,
+  'APA': apaSpecificSchema,
+  'MLA': mlaSpecificSchema,
 };
 
 const journalSchema = new Schema({
@@ -54,16 +54,45 @@ const citationSchema = new Schema({
     required: true,
     enum: Object.keys(styleSpecificSchemas)
   },
-  styleSpecific: Schema.Types.Mixed,
+  styleSpecific: {
+    type: Schema.Types.Mixed
+  },
   comments: String,
   user_id: {
     type: String,
     required: true
   },
-  isDeleted: { type: Boolean, default: false }
+  isDeleted: { type: Boolean, default: false },
+  favoritedBy: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 },
-
   { timestamps: true });
+
+
+  citationSchema.index({
+    'authors': 'text',
+    'paperTitle': 'text',
+    'publisherLocation': 'text',
+    'journal.journalName': 'text',
+    'DOI': 'text',
+    'comments': 'text',
+    'styleSpecific.methods': 'text',
+    'styleSpecific.observations': 'text',
+    'styleSpecific.annotation': 'text',
+    'styleSpecific.tags': 'text',
+  }, {
+    weights: {
+      'authors': 10,
+      'paperTitle': 10,
+      'publisherLocation': 5,
+      'journal.journalName': 8,
+      'DOI': 6,
+      'comments': 3,
+      'styleSpecific.methods': 7,
+      'styleSpecific.observations': 7,
+      'styleSpecific.annotation': 6,
+      'styleSpecific.tags': 4,
+    }
+  });
 
 // Helper function to manage style-specific data
 function getStyleSpecificData(citationStyle, data) {
@@ -81,15 +110,10 @@ citationSchema.pre('save', function (next) {
   next();
 });
 
-citationSchema.pre('save', function (next) {
-  if (this.isModified('styleSpecific')) {
-    this.markModified('styleSpecific');
-  }
-  next();
-});
-
 citationSchema.pre('findOneAndUpdate', function (next) {
-  this._update.styleSpecific = getStyleSpecificData(this._update.citationStyle, this._update.styleSpecific);
+  if (this._update.styleSpecific) {
+    this._update.styleSpecific = getStyleSpecificData(this._update.citationStyle, this._update.styleSpecific);
+  }
   next();
 });
 

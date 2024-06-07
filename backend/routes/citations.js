@@ -4,7 +4,13 @@ const {
   getCitations,
   getCitation,
   deleteCitation,
-  updateCitation
+  undoDeleteCitation,
+  updateCitation,
+  addSearchToHistory,
+  getSearchHistory,
+  clearSearchHistory,
+  searchCitations,
+
 } = require('../controllers/citationController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -24,8 +30,11 @@ router.post('/', createCitation)
 // DELETE a citation
 router.delete('/:id', deleteCitation)
 
-// UPDATE a citation
-router.patch('/:id', updateCitation)
+// UNDO delete a citation
+router.patch('/:id/undo', undoDeleteCitation);
+
+// Full update of a citation
+router.put('/:id', updateCitation);
 
 
 module.exports = router

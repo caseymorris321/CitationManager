@@ -20,7 +20,7 @@ const CustomNavbar = () => {
           <Nav className="ms-auto"> {/* Align navigation items to the right */}
             {user ? (
               <>
-                <Nav.Item className="me-3"> {/* Margin right for spacing */}
+                <Nav.Item className="me-3 mt-3"> {/* Margin right for spacing */}
                   <span>{user.email}</span>
                 </Nav.Item>
                 <Button variant="outline-primary" onClick={handleClick}>Log out</Button>

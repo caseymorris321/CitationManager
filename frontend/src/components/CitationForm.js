@@ -3,8 +3,6 @@ import { useCitationsContext } from "../hooks/useCitationsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 
-
-
 const CitationForm = () => {
   const { dispatch } = useCitationsContext();
   const { user } = useAuthContext();
@@ -220,7 +218,7 @@ const CitationForm = () => {
               <Form.Label>Comments:</Form.Label>
               <Form.Control as="textarea" value={comments} onChange={e => setComments(e.target.value)} className={emptyFields.includes('comments') ? 'error' : ''} />
             </Form.Group>
-
+ 
             <Button type="submit" variant="primary">Add Citation</Button>
             {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
 
