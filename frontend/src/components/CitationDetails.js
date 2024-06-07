@@ -6,6 +6,8 @@ import { Button, Card } from "react-bootstrap";
 import CitationUpdateForm from "./CitationUpdateForm";
 import formatCitation from "../utils/citationFormatters/formatCitation";
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const CitationDetails = ({ citation, onFavoriteClick, setCitation }) => {
   const { citations, dispatch } = useCitationsContext();
   const { user } = useAuthContext();
@@ -23,7 +25,7 @@ const CitationDetails = ({ citation, onFavoriteClick, setCitation }) => {
       return;
     }
 
-    const response = await fetch(`/api/citations/${citation._id}`, {
+    const response = await fetch(`${baseUrl}/api/citations/${citation._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +84,7 @@ const CitationDetails = ({ citation, onFavoriteClick, setCitation }) => {
       partialUpdate = { [field]: value };
     }
 
-    const response = await fetch(`/api/citations/${citation._id}`, {
+    const response = await fetch(`${baseUrl}/api/citations/${citation._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -217,7 +219,7 @@ const CitationDetails = ({ citation, onFavoriteClick, setCitation }) => {
       "Are you sure you want to delete this citation?"
     );
     if (confirmDelete) {
-      const response = await fetch(`/api/citations/${citation._id}`, {
+      const response = await fetch(`${baseUrl}/api/citations/${citation._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -240,7 +242,7 @@ const CitationDetails = ({ citation, onFavoriteClick, setCitation }) => {
       return;
     }
   
-    const response = await fetch(`/api/citations/${citation._id}`, {
+    const response = await fetch(`${baseUrl}/api/citations/${citation._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

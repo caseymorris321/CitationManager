@@ -3,6 +3,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useAuthContext } from '../hooks/useAuthContext';
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const SearchHistory = ({ timestamp }) => {
   const { user } = useAuthContext();
   const [searchHistory, setSearchHistory] = useState([]);
@@ -10,7 +12,7 @@ const SearchHistory = ({ timestamp }) => {
 
   const fetchSearchHistory = useCallback(async () => {
     try {
-      const response = await fetch(`/api/search/search-history`, {
+      const response = await fetch(`${baseUrl}/api/search/search-history`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -40,7 +42,7 @@ const SearchHistory = ({ timestamp }) => {
     const confirmClear = window.confirm('Are you sure you want to clear your search history?');
     if (confirmClear) {
       try {
-        const response = await fetch(`/api/search/search-history`, {
+        const response = await fetch(`${baseUrl}/api/search/search-history`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${user.token}`,

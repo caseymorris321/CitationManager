@@ -4,6 +4,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useCitationsContext } from '../hooks/useCitationsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const SearchForm = ({ onNewSearchQuery }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const { dispatch } = useCitationsContext();
@@ -18,7 +20,7 @@ const SearchForm = ({ onNewSearchQuery }) => {
     }
 
     try {
-      const response = await fetch(`/api/search/search?query=${encodeURIComponent(searchQuery)}`, {
+      const response = await fetch(`${baseUrl}/api/search/search?query=${encodeURIComponent(searchQuery)}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -29,7 +31,7 @@ const SearchForm = ({ onNewSearchQuery }) => {
         dispatch({ type: 'SET_CITATIONS', payload: data });
 
         // Add search query to history
-        const historyResponse = await fetch(`/api/search/search-history`, {
+        const historyResponse = await fetch(`${baseUrl}/api/search/search-history`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ const SearchForm = ({ onNewSearchQuery }) => {
     setSearchQuery('');
     
     try {
-      const response = await fetch('/api/citations', {
+      const response = await fetch(`${baseUrl}/api/citations`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

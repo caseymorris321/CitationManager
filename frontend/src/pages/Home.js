@@ -9,6 +9,8 @@ import SearchHistory from "../components/SearchHistory";
 import { Button, Row, Col } from "react-bootstrap";
 import { sortCitations } from "../utils/sort";
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const Home = () => {
   const { citations, favorites, dispatch } = useCitationsContext();
   const { user } = useAuthContext();
@@ -23,7 +25,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/citations", {
+        const response = await fetch(`${baseUrl}/api/citations`, {
           headers: {
             Authorization: `Bearer ${user ? user.token : ""}`,
           },
@@ -65,7 +67,7 @@ const Home = () => {
 
         if (isFavorite) {
           // Remove the citation from favorites
-          response = await fetch(`/api/favorites/${citationId}`, {
+          response = await fetch(`${baseUrl}/api/favorites/${citationId}`, {
             method: 'DELETE',
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -73,7 +75,7 @@ const Home = () => {
           });
         } else {
           // Add the citation to favorites
-          response = await fetch(`/api/favorites/${citationId}`, {
+          response = await fetch(`${baseUrl}/api/favorites/${citationId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

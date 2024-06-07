@@ -3,6 +3,8 @@ import { useCitationsContext } from "../hooks/useCitationsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const CitationForm = () => {
   const { dispatch } = useCitationsContext();
   const { user } = useAuthContext();
@@ -63,7 +65,7 @@ const CitationForm = () => {
       } : null
     };
 
-    const response = await fetch('/api/citations', {
+    const response = await fetch(`${baseUrl}/api/citations`, {
       method: 'POST',
       body: JSON.stringify(citation),
       headers: {

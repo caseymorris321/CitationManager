@@ -6,6 +6,8 @@ import CitationDetails from '../components/CitationDetails';
 import { Button } from 'react-bootstrap';
 import { useCitationsContext } from "../hooks/useCitationsContext";
 
+const baseUrl = 'https://citationmanagerbackend.onrender.com';
+
 const CitationDetailsPage = () => {
     const { id } = useParams();
     const { user } = useAuthContext();
@@ -16,7 +18,7 @@ const CitationDetailsPage = () => {
     useEffect(() => {
         const fetchCitation = async () => {
             try {
-                const response = await fetch(`/api/citations/${id}`, {
+                const response = await fetch(`${baseUrl}/api/citations/${id}`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -46,7 +48,7 @@ const CitationDetailsPage = () => {
         if (user) {
             const method = citation.isFavorite ? "DELETE" : "POST";
             try {
-                const response = await fetch(`/api/favorites/${id}`, {
+                const response = await fetch(`${baseUrl}/api/favorites/${id}`, {
                     method: method,
                     headers: {
                         Authorization: `Bearer ${user.token}`,
