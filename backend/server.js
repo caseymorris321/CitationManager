@@ -13,7 +13,6 @@ const app = express();
 
 // middleware
 app.use(express.json());
-const cors = require('cors');
 app.use(cors({
   origin: 'https://citationmanagerfrontend.onrender.com', 
 }));
