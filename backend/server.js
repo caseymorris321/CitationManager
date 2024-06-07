@@ -29,9 +29,9 @@ app.use('/api/favorites', favoriteRoutes);
 app.use('/api/search', searchRoutes);
 
 // start the server
-const PORT = process.env.PORT || 4000;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const server = app.listen(process.env.PORT || 3000, () => {
+  const port = server.address().port;
+  console.log(`Server is running on port ${port}`);
 });
 
 // connect to db
